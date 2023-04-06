@@ -16,4 +16,12 @@ class PreferenceHelper (private val context: Context, name: String = PREFERENCES
         set(value) {
             sharedPreferences.edit().putBoolean(STATUS_LOGIN, value).apply()
         }
+
+    var token: String
+        get() {
+            return sharedPreferences.getString(TOKEN,"")?:""
+        }
+        set(value) {
+            sharedPreferences.edit().putString(TOKEN,"$BEARER $value").apply()
+        }
 }

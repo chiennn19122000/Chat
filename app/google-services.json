@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "130327239960",
+    "firebase_url": "https://chatgpt-ef5b2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "chatgpt-ef5b2",
+    "storage_bucket": "chatgpt-ef5b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130327239960:android:04ac8b006efdc35f6e526d",
+        "android_client_info": {
+          "package_name": "com.example.chatgptfree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130327239960-ak5nbuodkcd9e4ob6uae62mgm53ch4ff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6rFH1y0mX71f8mVIBVwPOf9L-5R-VQeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130327239960-ak5nbuodkcd9e4ob6uae62mgm53ch4ff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

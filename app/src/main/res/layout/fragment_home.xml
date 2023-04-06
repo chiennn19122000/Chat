@@ -6,24 +6,57 @@
     <data>
 
         <variable
-            name="mainVM"
+            name="homeVM"
             type="com.example.chatgptfree.ui.home.HomeViewModel" />
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.main.MainActivity">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/word"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{mainVM.completion.choices.get(0).message.content.toString()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler_view"
+            app:data="@{homeVM.messCompletion}"
+            android:layout_above="@id/bottom_layout"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:spanCount="1"
+            tools:listitem="@layout/item_mess"
+            />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/dp_8"
+            android:id="@+id/bottom_layout">
+
+            <EditText
+                android:id="@+id/message_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toStartOf="@id/send_btn"
+                android:background="@drawable/rounded_corner"
+                android:hint="@string/write_here"
+                android:minHeight="@dimen/dp_40"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingRight="@dimen/dp_12" />
+
+            <ImageButton
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:id="@+id/send_btn"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/dp_10"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/ic_baseline_send_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                />
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
 </layout>
