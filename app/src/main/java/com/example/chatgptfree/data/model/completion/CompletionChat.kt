@@ -6,7 +6,7 @@ data class CompletionChat(
     @SerializedName("model")
     val model: String ,
     @SerializedName("messages")
-    val messages: List<Message> ,
+    val messages: MutableList<Message> ,
     @SerializedName("temperature")
     val temperature: Double
 )

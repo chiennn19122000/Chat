@@ -36,8 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(){
                     viewModel.setContentToMe(MessCompletion(text,true),messAdapter,callback)
                     messageEditText.setText("")
                     val message = Message("user",text)
-                    val content = CompletionChat("gpt-3.5-turbo", listOf(message),0.0)
-                    viewModel.getCompletion(content,preferenceHelper.token,messAdapter,callback)
+                    viewModel.getCompletion(message,preferenceHelper.token,messAdapter,callback)
                 }
             }
         }
