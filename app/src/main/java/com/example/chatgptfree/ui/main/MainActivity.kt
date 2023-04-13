@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         preferenceHelper = PreferenceHelper(this)
+        supportActionBar?.hide()
         val database = FirebaseDatabase.getInstance(BASE_URL_REALTIME_DB)
         val myRef = database.getReference(TOKEN)
 

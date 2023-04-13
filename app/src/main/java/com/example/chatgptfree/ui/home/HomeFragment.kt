@@ -1,13 +1,16 @@
 package com.example.chatgptfree.ui.home
 
+import androidx.lifecycle.lifecycleScope
 import com.example.chatgptfree.R
 import com.example.chatgptfree.base.BaseFragment
-import com.example.chatgptfree.data.model.completion.CompletionChat
 import com.example.chatgptfree.data.model.completion.Message
 import com.example.chatgptfree.data.model.message.MessCompletion
 import com.example.chatgptfree.databinding.FragmentHomeBinding
 import com.example.chatgptfree.ui.adapter.MessageAdapter
 import com.example.chatgptfree.utils.IntegerCallback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment : BaseFragment<FragmentHomeBinding>(){
     override val layoutResource: Int
@@ -36,7 +39,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(){
                     viewModel.setContentToMe(MessCompletion(text,true),messAdapter,callback)
                     messageEditText.setText("")
                     val message = Message("user",text)
-                    viewModel.getCompletion(message,preferenceHelper.token,messAdapter,callback)
+                    lifecycleScope.launch(Dispatchers.IO){
+                        viewModel.getCompletion(message,preferenceHelper.token,messAdapter,callback)
+                    }
                 }
             }
         }

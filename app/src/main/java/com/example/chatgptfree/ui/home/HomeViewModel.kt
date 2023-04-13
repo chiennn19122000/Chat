@@ -11,9 +11,8 @@ import com.example.chatgptfree.data.model.message.MessCompletion
 import com.example.chatgptfree.data.repository.CompletionRepository
 import com.example.chatgptfree.ui.adapter.MessageAdapter
 import com.example.chatgptfree.utils.IntegerCallback
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.kotlin.addTo
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class HomeViewModel(
     private val completionRepository: CompletionRepository
@@ -38,44 +37,58 @@ class HomeViewModel(
         _isLoading.value = false
     }
 
-    fun getCompletion(message: Message, auth: String, adapter: MessageAdapter, callback: IntegerCallback) {
-        _isLoading.value = true
-        if (listMess.size <= 10) listMess.add(message)
-        else listMess.apply {
-            this.removeFirst()
-            this.add(message)
-        }
-        val content = CompletionChat("gpt-3.5-turbo", listMess,0.5)
-        completionRepository.getCompletion(content, auth)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                _isLoading.value = false
-                _completion.value = it
-                if (listMess.size <= 10) listMess.add(it.choices[0].message)
+    suspend fun getCompletion(
+        message: Message,
+        auth: String,
+        adapter: MessageAdapter,
+        callback: IntegerCallback
+    ) {
+        try {
+            withContext(Dispatchers.Main){
+                _isLoading.value = true
+                if (listMess.size <= 10) listMess.add(message)
                 else listMess.apply {
                     this.removeFirst()
-                    this.add(it.choices[0].message)
+                    this.add(message)
                 }
-                _messCompletion.value?.add(MessCompletion(it.choices[0].message.content, false))
-                changeAdapter(adapter, callback)
+            }
+            val content = CompletionChat("gpt-3.5-turbo", listMess, 0.5)
+            val result = completionRepository.getCompletion(content, auth)
 
-            }, {
+            withContext(Dispatchers.Main){
                 _isLoading.value = false
-                _error.value = it.message.toString()
+                _completion.value = result
+                if (listMess.size <= 10) listMess.add(result.choices[0].message)
+                else listMess.apply {
+                    this.removeFirst()
+                    this.add(result.choices[0].message)
+                }
+                _messCompletion.value?.add(MessCompletion(result.choices[0].message.content, false))
+                changeAdapter(adapter, callback)
+            }
+
+
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main){
+                _isLoading.value = false
+                _error.value = e.message.toString()
                 _messCompletion.value?.add(MessCompletion(_error.value.toString(), false))
                 changeAdapter(adapter, callback)
-            })
-            .addTo(disposable)
+            }
+        }
     }
 
-    fun setContentToMe(message: MessCompletion, adapter: MessageAdapter, callback: IntegerCallback) {
+    fun setContentToMe(
+        message: MessCompletion,
+        adapter: MessageAdapter,
+        callback: IntegerCallback
+    ) {
         _messCompletion.value?.add(message)
-        changeAdapter(adapter,callback)
+        changeAdapter(adapter, callback)
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun changeAdapter(adapter: MessageAdapter, callback: IntegerCallback){
+    private fun changeAdapter(adapter: MessageAdapter, callback: IntegerCallback) {
         if ((_messCompletion.value?.size ?: 0) > 0)
             adapter.notifyItemInserted(_messCompletion.value?.size!!)
         else

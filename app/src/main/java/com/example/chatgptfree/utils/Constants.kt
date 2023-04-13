@@ -8,3 +8,6 @@ const val STATUS_LOGIN = "status_login"
 const val TOKEN = "token"
 const val BEARER = "Bearer"
 
+const val matchResultString = "\"text\":"
+const val matchResultTurboString = "\"content\":"
+

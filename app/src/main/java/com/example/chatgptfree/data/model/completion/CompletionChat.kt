@@ -8,5 +8,7 @@ data class CompletionChat(
     @SerializedName("messages")
     val messages: MutableList<Message> ,
     @SerializedName("temperature")
-    val temperature: Double
+    val temperature: Double,
+    @SerializedName("stream")
+    var stream: Boolean = false
 )
