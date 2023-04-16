@@ -7,4 +7,7 @@ class CompletionRepositoryImpl(
     private val remote: CompletionDataSource
 ): CompletionRepository {
     override suspend fun getCompletion(chat: CompletionChat, auth: String): CompletionObj = remote.getCompletion(chat, auth)
+
+    override fun textCompletionsTurboWithStream(chat: CompletionChat, auth: String) = remote.textCompletionsTurboWithStream(chat, auth)
+
 }

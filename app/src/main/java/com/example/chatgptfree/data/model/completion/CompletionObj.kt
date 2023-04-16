@@ -40,7 +40,7 @@ data class Choices(
 
 data class Message(
     @SerializedName("role")
-    val role: String,
+    var role: String?,
     @SerializedName("content")
-    val content: String
+    var content: String?
 )

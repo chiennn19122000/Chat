@@ -4,25 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="homeVM"
             type="com.example.chatgptfree.ui.home.HomeViewModel" />
     </data>
     <RelativeLayout
+        android:id="@+id/container_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/layout_bot"
             app:data="@{homeVM.messCompletion}"
-            android:layout_above="@id/bottom_layout"
+            android:fitsSystemWindows="true"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:spanCount="1"
-            tools:listitem="@layout/item_mess"
-            />
+            tools:listitem="@layout/item_mess" />
+
+        <RelativeLayout
+            android:id="@+id/layout_bot"
+            android:visibility="@{homeVM.isShow() ? View.VISIBLE : View.GONE }"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottom_layout"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:id="@+id/left_chat_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="80dp"
+                android:background="@drawable/rounded_corner"
+                android:backgroundTint="#1E88E5"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_bot"
+                    android:text="@{homeVM.text}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,8 +74,8 @@
                 android:paddingRight="@dimen/dp_12" />
 
             <ImageButton
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="@dimen/dp_40"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
                 android:id="@+id/send_btn"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
@@ -55,8 +85,5 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 />
         </RelativeLayout>
-
-
-
     </RelativeLayout>
 </layout>

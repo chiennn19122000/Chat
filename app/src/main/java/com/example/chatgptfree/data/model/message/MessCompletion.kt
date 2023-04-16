@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MessCompletion(
-    val mess: String,
+    var mess: String,
     val sentByMe: Boolean
 ): Parcelable {
 

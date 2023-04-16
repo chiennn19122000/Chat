@@ -10,5 +10,5 @@ data class CompletionChat(
     @SerializedName("temperature")
     val temperature: Double,
     @SerializedName("stream")
-    var stream: Boolean = false
+    var stream: Boolean = true
 )

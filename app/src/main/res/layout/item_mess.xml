@@ -28,7 +28,7 @@
                 android:textColor="@color/white"
                 android:text="@{mess.mess}"
                 android:textIsSelectable="true"
-                android:textSize="18sp"
+                android:textSize="@dimen/sp_14"
                 />
         </LinearLayout>
         <LinearLayout
@@ -49,7 +49,7 @@
                 android:textColor="@color/white"
                 android:text="@{mess.mess}"
                 android:textIsSelectable="true"
-                android:textSize="18sp"
+                android:textSize="@dimen/sp_14"
                 />
         </LinearLayout>
 
